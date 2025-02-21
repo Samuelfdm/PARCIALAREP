@@ -8,12 +8,13 @@ import java.net.URL;
 
 public class FacadeServices {
 
+    //private static FacadeServices;
     private static final String USER_AGENT = "Mozilla/5.0";
-    private static final String GET_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=fb&apikey=Q1QZFVJQ21K7C6XM";
+    private static final String BACKEND_URL = "http://localhost:45000/compreflex?comando=";
 
     public static void main(String[] args) throws IOException {
 
-        URL obj = new URL(GET_URL);
+        URL obj = new URL(BACKEND_URL);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("User-Agent", USER_AGENT);
@@ -23,8 +24,7 @@ public class FacadeServices {
         System.out.println("GET Response Code :: " + responseCode);
 
         if (responseCode == HttpURLConnection.HTTP_OK) { // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
             StringBuffer response = new StringBuffer();
 
