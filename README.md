@@ -10,3 +10,5 @@ clone y pasese a la carpeta \arep
 
 Intente utiliza Gson para las respuestas json pero java no las encuentra porque me falta clonar las dependencias en el pom
 si agrego esas lineas, funcionan.
+
+* LOS RESULTADODS PUEDEN VERSE POR CONSOLA *
