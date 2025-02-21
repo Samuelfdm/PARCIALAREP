@@ -13,11 +13,10 @@ public class FacadeWeb {
             System.exit(1);
         }
 
-        Socket clientSocket = null;
-
         boolean running = true;
 
         while(running){
+            Socket clientSocket = null;
             try {
                 System.out.println("Listo para recibir ...");
                 clientSocket = serverSocket.accept();
@@ -42,12 +41,10 @@ public class FacadeWeb {
 
             if (path.startsWith("/cliente")){
                 outputLine = getWebService();
-            } else if (path.startsWith("/consulta")){
-                outputLine = "HTTP/1.1 200 OK\r\n"
-                        + "Content-Type: text/html\r\n"
-                        + "\r\n"
-                        + "consulta\n";
-                //outputLine = FacadeServices.getFacadeServices().getComando("DD");
+            } else if (path.startsWith("/consulta") && path.contains("comando=")){
+                String comando = path.split("=")[1];
+                outputLine = FacadeServices.getFacadeServices().getComando(comando);
+                System.out.println("OUTPUTLINEEEEE: "+outputLine);
             } else{
                 outputLine = errorMessage();
             }

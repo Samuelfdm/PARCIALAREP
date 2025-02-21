@@ -25,7 +25,7 @@ public class FacadeServices {
     private static final String USER_AGENT = "Mozilla/5.0";
     private static final String BACKEND_URL = "http://localhost:45000/compreflex?comando=";
 
-    public static String getComando(String comando) throws IOException {
+    public String getComando(String comando) throws IOException {
         URL obj = new URL(BACKEND_URL+comando);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
@@ -41,7 +41,7 @@ public class FacadeServices {
             StringBuffer response = new StringBuffer(); //
             firstLine = in.readLine();
 
-            System.out.println("PRIMERA LINEA DE RESPUESTA DEL BACK"+firstLine);
+            System.out.println("PRIMERA LINEA DE RESPUESTA DEL BACK: "+firstLine);
 
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
@@ -49,8 +49,7 @@ public class FacadeServices {
             in.close();
 
             // DEBO DEVOLVERLE LA RESPUESTA DEL BACK AL FRONT WEB PARA IMPRIMIRLO
-            System.out.println("RESONSEEEEE"+ response.toString());
-            return response.toString();
+            return firstLine;
         } else {
             System.out.println("GET request not worked");
             return "GET request not worked";
