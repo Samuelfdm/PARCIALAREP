@@ -41,15 +41,13 @@ public class FacadeWeb {
             System.out.println("PATHHHHHHHHHH: "+path);
 
             if (path.startsWith("/cliente")){
-                outputLine = "HTTP/1.1 200 OK\r\n"
-                        + "Content-Type: text/html\r\n"
-                        + "\r\n"
-                        + "cliente\n";
+                outputLine = getWebService();
             } else if (path.startsWith("/consulta")){
                 outputLine = "HTTP/1.1 200 OK\r\n"
                         + "Content-Type: text/html\r\n"
                         + "\r\n"
                         + "consulta\n";
+                //outputLine = FacadeServices.getFacadeServices().getComando("DD");
             } else{
                 outputLine = errorMessage();
             }
@@ -109,7 +107,7 @@ public class FacadeWeb {
                 + "<title>ERROR MESSAGE</title>\n"
                 + "</head>\n"
                 + "<body>\n"
-                + "<h1>Bad Request</h1>\n"
+                + "<h1>400 Bad Request</h1>\n"
                 + "</body>\n"
                 + "</html>\n";
     }

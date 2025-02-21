@@ -4,17 +4,29 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 
 public class FacadeServices {
 
-    //private static FacadeServices;
+    //Necesito la instancia de FacadeServices, singleton puede ser.
+    private static FacadeServices facadeServices;
+
+    public static FacadeServices getFacadeServices(){
+        if(facadeServices == null){
+            return new FacadeServices();
+        }else{
+            return facadeServices;
+        }
+    }
+
+    public FacadeServices(){};
+
     private static final String USER_AGENT = "Mozilla/5.0";
     private static final String BACKEND_URL = "http://localhost:45000/compreflex?comando=";
 
-    public static void main(String[] args) throws IOException {
-
-        URL obj = new URL(BACKEND_URL);
+    public static String getComando(String comando) throws IOException {
+        URL obj = new URL(BACKEND_URL+comando);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("User-Agent", USER_AGENT);
@@ -25,20 +37,24 @@ public class FacadeServices {
 
         if (responseCode == HttpURLConnection.HTTP_OK) { // success
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
+            String inputLine, firstLine;
+            StringBuffer response = new StringBuffer(); //
+            firstLine = in.readLine();
+
+            System.out.println("PRIMERA LINEA DE RESPUESTA DEL BACK"+firstLine);
 
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
             in.close();
 
-            // print result
-            System.out.println(response.toString());
+            // DEBO DEVOLVERLE LA RESPUESTA DEL BACK AL FRONT WEB PARA IMPRIMIRLO
+            System.out.println("RESONSEEEEE"+ response.toString());
+            return response.toString();
         } else {
             System.out.println("GET request not worked");
+            return "GET request not worked";
         }
-        System.out.println("GET DONE");
     }
 
 }
